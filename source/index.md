@@ -47,6 +47,7 @@ Map expressions are enclosed in curly brackets, and are typically in JSON-compat
 
 Reflex handles many type conversions implicitly, and a few others take advantage of built-in Reflex functions. Table 2 shows what conversions are possible.Table 2. Type Conversions
  | | | | From | | | |
+-|-|-|-| ---- |-|-|-|
 To | String | Number | Boolean | List | Map | Date | Time
 -- | ------ | ------ | ------- | ---- | --- | ---- | ----String |  | auto | auto | auto | auto | auto | autoNumber | cast() | | x | | | epoch | msecsBoolean | x | x | | | x | x | x | xList | x | x | x | | x | x | xMa | x | x | x | x | | x | xDate | YYYYYMMDD | epoch | x | x | x | | xTime | HH:MM:SS | msecs | x | x | x | x | | 	
 # Operators
@@ -148,7 +149,10 @@ Serving Reflex scripts from Rapture requires the ReflexRefScriptPageServlet. Rat
 
 This appendix lists the complete set of built-in functions that are usable in Reflex scripts. NOTE: Reflex treats all the functions listed here as keywords. Therefore, it is not legal to create, for example, a variable that has the same name as one of these functions.## all
 
-Syntax: boolean all(booleanFunction, listExpression)Description: The all function takes a previously defined boolean function and tests it against every item in listExpression. It returns true if all items in listExpression are tested as true.  Example:def isThree(val)  return val == 3;endinputList1 = [1,2,3,4];inputList2 = [3,3,3];result1 = all(isThree,inputList1);result2 = all(isThree,inputList2);assert(result1 == false);assert(result2 == true);## any
+Syntax: boolean all(booleanFunction, listExpression)Description: The all function takes a previously defined boolean function and tests it against every item in listExpression. It returns true if all items in listExpression are tested as true.  > Example:
+```java
+def isThree(val)  return val == 3;endinputList1 = [1,2,3,4];inputList2 = [3,3,3];result1 = all(isThree,inputList1);result2 = all(isThree,inputList2);assert(result1 == false);assert(result2 == true);```
+## any
 
 Syntax: boolean any(booleanFunction, listExpression)Description: The any function takes a previously defined boolean function and tests it against every item in listExpression. It returns true if any item in listExpression is tested as true. (The function will stop testing as soon as it evaluates a true item.)  Example:def isThree(val)  return val == 3;endinputList1 = [1,2,3,4];inputList2 = [2,4,6];result1 = any(isThree,inputList1);result2 = any(isThree,inputList2);assert(result1 == true);assert(result2 == false);## archive
 
