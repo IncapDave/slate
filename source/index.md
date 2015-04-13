@@ -46,10 +46,96 @@ Map expressions are enclosed in curly brackets, and are typically in JSON-compat
 	## Type Conversion
 
 Reflex handles many type conversions implicitly, and a few others take advantage of built-in Reflex functions. Table 2 shows what conversions are possible.Table 2. Type Conversions
- | | | | From | | | |
-- | - | - | - | ---- | - | - | -
-To | String | Number | Boolean | List | Map | Date | Time
--- | ------ | ------ | ------- | ---- | --- | ---- | ----String |  | auto | auto | auto | auto | auto | autoNumber | cast() | | x | | | epoch | msecsBoolean | x | x | | | x | x | x | xList | x | x | x | | x | x | xMa | x | x | x | x | | x | xDate | YYYYYMMDD | epoch | x | x | x | | xTime | HH:MM:SS | msecs | x | x | x | x | | 	
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="8">From</th>
+    </tr>
+    <tr>
+      <th>To</th>
+      <th>String</th>
+      <th>Number</th>
+      <th>Boolean</th>
+      <th>List</th>
+      <th>Map</th>
+      <th>Date</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+     <tr>
+       <td>String</td>
+       <td>&nbsp;</td>
+       <td>auto</td>
+       <td>auto</td>
+       <td>auto</td>
+       <td>auto</td>
+       <td>auto</td>
+       <td>auto</td>
+     </tr>
+     <tr>
+       <td>Number</td>
+       <td>cast</td>
+       <td>#nbsp;</td>
+       <td>x</td>
+       <td>#nbsp;</td>
+       <td>#nbsp</td>
+       <td>epoch</td>
+       <td>msecs</td>
+     </tr>
+     <tr>
+       <td>Boolean</td>
+       <td>x</td>
+       <td>x</td>
+       <td>&nbsp;</td>
+       <td>x</td>
+       <td>x</td>
+       <td>x</td>
+       <td>x</td>
+     </tr>
+     <tr>
+       <td>List</td>
+       <td>x</td>
+       <td>x</td>
+       <td>x</td>
+       <td>&nbsp;</td>
+       <td>x</td>
+       <td>x</td>
+       <td>x</td>
+     </tr>
+     <tr>
+       <td>Map</td>
+       <td>x</td>
+       <td>x</td>
+       <td>x</td>
+       <td>x</td>
+       <td>&nbsp;</td>
+       <td>x</td>
+       <td>x</td>
+     </tr>
+     <tr>
+       <td>Date</td>
+       <td>YYYYMMDD</td>
+       <td>epoch</td>
+       <td>x</td>
+       <td>x</td>
+       <td>x</td>
+       <td>&nbsp;</td>
+       <td>x</td>
+     </tr>
+     <tr>
+       <td>Time</td>
+       <td>HH:MM:SS</td>
+       <td>msecs</td>
+       <td>x</td>
+       <td>x</td>
+       <td>x</td>
+       <td>x</td>
+       <td>x</td>
+     </tr>
+  </tbody>
+</table>
 # Operators
 
 Most operators in Reflex are similar or identical to commonly used operators in other languages. 
