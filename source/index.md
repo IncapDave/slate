@@ -47,7 +47,7 @@ Map expressions are enclosed in curly brackets, and are typically in JSON-compat
 
 Reflex handles many type conversions implicitly, and a few others take advantage of built-in Reflex functions. Table 2 shows what conversions are possible.Table 2. Type Conversions
  | | | | From | | | |
--|-|-|-| ---- |-|-|-|
+- | - | - | - | ---- | - | - | -
 To | String | Number | Boolean | List | Map | Date | Time
 -- | ------ | ------ | ------- | ---- | --- | ---- | ----String |  | auto | auto | auto | auto | auto | autoNumber | cast() | | x | | | epoch | msecsBoolean | x | x | | | x | x | x | xList | x | x | x | | x | x | xMa | x | x | x | x | | x | xDate | YYYYYMMDD | epoch | x | x | x | | xTime | HH:MM:SS | msecs | x | x | x | x | | 	
 # Operators
