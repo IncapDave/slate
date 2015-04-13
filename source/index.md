@@ -160,12 +160,14 @@ Operator | Symbol | Examples
 
 Two special operators called *push* and *pull* are used for writing data to and reading data from an external source, respectively. Their symbols are `-->` for push and `<--` for pull. All data is pushed to or pulled from a file object or a queue object, as defined in Table 1. The data itself can be a string type, a list type, or a map type. However, it is important to ensure that the script pull the same type of data that was originally pushed into a file. Because the queue object works only with messages taken from or added to the Rapture queue, only one format is allowed for the data. The following code shows a simple example that uses the push and pull operators. It uses a repository named test.config to store map data. The first script defines the structure and pushes it as follows: > Script to push 
 ```javaconfig = {};// Write the map dataconfig['Option1'] = true;config['level'] = 42;// Create a documentdisplayName = 'test.config/main';// Write the map to the documentconfig --> displayName;```
-Next, a different script pulls in the map data and uses it to control the script's behavior: < Script to pull
+Next, a different script pulls in the map data and uses it to control the script's behavior: > Script to pull
 ```javaappConfig <-- displayName;if (appConfig['Option1']) do  println("level is " + appConfig['level']); else do  println("Option1 is not set.");end```
 Note that println, which is a built-in function in Reflex, handles simple formatted printing, as in this example. If all is well, the output from the second snippet of code would be: level is 42.If a file is in a repository that supports metadata, two other operators are available for manipulating the metadata. These are metapush and metapull, denoted by -->> and <<--.The following code snippet simply prints the metadata from a specific file. > Printing metadata
 ```javaMeta <<-- 'c_smrs/official/physical/bond/861594AB5';println ("Meta is " + Meta);```
 The resulting output would resemble the following: > Output from previous example
-`Meta is {version=1,writeTime=1351614168682,user=alan,comment=FeatureInstaller,deleted=false}'Finally, Reflex supports a *download/write-back* operator, denoted by `<-->`, which transfers data from a URI to a Reflex value, so that a simple operation on the Reflex value can take place and the updated data can be written back to the URI. An example of the syntax for this operator would be as follows: > Write-back example
+
+```java`Meta is {version=1,writeTime=1351614168682,user=alan,comment=FeatureInstaller,deleted=false}'```
+Finally, Reflex supports a *download/write-back* operator, denoted by `<-->`, which transfers data from a URI to a Reflex value, so that a simple operation on the Reflex value can take place and the updated data can be written back to the URI. An example of the syntax for this operator would be as follows: > Write-back example
 ```java'uri' <--> v {  v['hello']=1;};
 ```
 # Flow Control
@@ -395,7 +397,8 @@ a = { 'one' : 1 };b = { 'two' : 2 };c = merge(a, b);assert(c == { 'one' : 1, 
 
 **Syntax:** map mergeif(mapExpression, mapExpression, [,...])**Description:** The mergeif function behaves identically to the merge function, except that it does not overwrite an existing value if more than one map has the same key-value pair. > Examples:
 ```java
-a = { 'one' : 1 };b = { 'two' : 2 };c = mergeif(a, b);assert(c == { 'one' : 1, 'two' : 2 });d = { 'one' : 1 };e = { 'one' : 'uno' };f = mergeif(d, e);assert(f == { 'one' : '1' });## message
+a = { 'one' : 1 };b = { 'two' : 2 };c = mergeif(a, b);assert(c == { 'one' : 1, 'two' : 2 });d = { 'one' : 1 };e = { 'one' : 'uno' };f = mergeif(d, e);assert(f == { 'one' : '1' });```
+## message
 
 **Syntax:** message(providerId,messageId)**Description:** This function takes a message with messageId from the message queue on the active Rapture server, and copies the message to another server with providerId. ## mkdir
 
