@@ -22,13 +22,13 @@ This manual applies to versions 1.1.16 of the Rapture Platform and to later vers
 Reflex is a loosely typed language that infers the type of a variable based on its context. Wherever possible, type coercion occurs automatically when a new type is needed in the current context.
 	## Definitions
 
-Table 1 defines the full list of data types in Reflex. Table 1. Data type definitionsType | Example | Description
+Table 1 defines the full list of data types in Reflex. **Table 1. Data type definitions**Type | Example | Description
 ---- | ------- | -----------string | ’Hello' | An array of charactersnumber | 4.0 | An integer or a floatboolean | true | A boolean valuelist | [1, 2, 3] | A list of valuesmap | { 'key' : 'value' } | An associate map, mapping keys to valuesmatrix | [ - ] | A 2-dimensional sparse matrixdate | date() | A calendar datetime | time() | A timefile | file('test.txt’)| A file object for reading or writing dataqueue | queue('test', 'thequeue') | Queue objects receive and send messages within Rapture.nul | null | Represents the null valuevoid | void | An untyped objectlib | lib(className) | Represents a Reflex librarystream | st = file('test.txt', 'CSV') | A stream of data from a file
 
 When first using a variable of any of these types, putting the keyword `const` before the type name makes the variable both static and global. Additional details about some of these types are presented in the following subsections. 
 ### Strings
 
-String literals can be enclosed in either single quotes or double quotes. The standard escape characters, such as \n for newline, are supported. Note that, if a string literal is bound by double quotes, any single quotes it contains are not escaped. Similarly, double quotes are not escaped if the string is bound by single quotes.
+String literals can be enclosed in either single quotes or double quotes. The standard escape characters, such as `\n` for newline, are supported. Note that, if a string literal is bound by double quotes, any single quotes it contains are not escaped. Similarly, double quotes are not escaped if the string is bound by single quotes.
 	### Numbers
 
 Number variables can take either integers, floating point numbers, or numbers in scientific notation for assigned values. The developer can 'lock' a number variable to accept only internal integer types, by placing an upper-case "L" directly after the value, as in the following example. `num = 360L;`This feature helps prevent type conflicts when using numbers in native Java calls.
@@ -37,20 +37,29 @@ Number variables can take either integers, floating point numbers, or numbers in
 As shown in Table 1, lists are always enclosed in square brackets. Their elements can be either string or numeric literals, or any expression that includes variables that have been previously defined. Different element types can be used within the same list, and lists can be nested.
 	### Matrices
 
-Matrices are two-dimensional; the entries, column identifiers, and row identifiers in a matrix can be denoted by any Reflex value (for example, columns can be numbers and rows can be strings). If an entry in a matrix has not been assigned a value, it is assumed to be null. The following lines of code initialize a matrix and populate one of its entries:```javaa = [ - ];a[4, 'Temperature'] = 98.6;
+Matrices are two-dimensional; the entries, column identifiers, and row identifiers in a matrix can be denoted by any Reflex value (for example, columns can be numbers and rows can be strings). If an entry in a matrix has not been assigned a value, it is assumed to be null. The following lines of code initialize a matrix and populate one of its entries:> Matrix example
+```javaa = [ - ];a[4, 'Temperature'] = 98.6;
 ```
 	### Maps
 
-Map expressions are enclosed in curly brackets, and are typically in JSON-compatible format. The rules for map elements are similar to those for lists, and maps themselves can also be nested. The following examples illustrate some common ways to store key-value pairs in a map. ```javaa = {};            // An empty mapb = { 'a' : 4 };   // A single-entry map, with 'a' as the key and 4 as the valuec = { 'one' : 1, 'two' : 2, 'three' : 3};d = { 'outer' : { 'inner' : true } };       // A nested map
+Map expressions are enclosed in curly brackets, and are typically in JSON-compatible format. The rules for map elements are similar to those for lists, and maps themselves can also be nested. The following examples illustrate some common ways to store key-value pairs in a map. > Map example
+```javaa = {};            // An empty mapb = { 'a' : 4 };   // A single-entry map, with 'a' as the key and 4 as the valuec = { 'one' : 1, 'two' : 2, 'three' : 3};d = { 'outer' : { 'inner' : true } };       // A nested map
 ```
 	## Type Conversion
 
-Reflex handles many type conversions implicitly, and a few others take advantage of built-in Reflex functions. Table 2 shows what conversions are possible.Table 2. Type Conversions
+Reflex handles many type conversions implicitly, and a few others take advantage of built-in Reflex functions. Table 2 shows what conversions are possible.**Table 2. Type Conversions**
 
 <table>
   <thead>
     <tr>
-      <th align="center" colspan="8">From</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>From</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
     <tr>
       <th>To</th>
@@ -141,37 +150,48 @@ Reflex handles many type conversions implicitly, and a few others take advantage
 Most operators in Reflex are similar or identical to commonly used operators in other languages. 
 ## Standard Operators
 
-Table 3 summarizes the standard operators and presents examples. Note that the assert macro, which is useful for simple debugging, causes a Reflex script to terminate with an error if the expression evaluates to false. 
+Table 3 summarizes the standard operators and presents examples. Note that the `assert` macro, which is useful for simple debugging, causes a Reflex script to terminate with an error if the expression evaluates to `false`. 
 
 Table 3. Simple Reflex Operators
 
 Operator | Symbol | Examples
--------- | ------ | --------AND | &amp;&amp; | assert(true &amp;&amp; true);OR | &#124;&#124; | assert(true &#124;&#124; false);Not | ! | assert(!false);Less than | < | assert(1 < 2);Greater than | > | assert(4 > 3);Equal to | == | assert(5 == 5);Addition | + | assert(1 + 7 == 8); | | assert([1] + 2 == [1,2]);Subtraction | - | assert(10 – 1 == 9); | | assert([1,2,3] – 3 == [1,2]);Multiplication | * | assert(50 * 2 == 100);Division | / | assert(4 / 2 == 2);Modulus | % | assert(99 % 3 == 0);Exponent | ^ | assert(2 ^ 3 == 8);Ternary | ? | x > y ? assert(x > y) : assert(y >= x);Index | [] | For these variables:  | | a = [1, 2, 3, 4, 5]; | | b = "abcdefg"; | | c = { 'one' : 1, 'two' : 2 }; | | These are the examples: | | assert(a[0] == 1); | | assert(a[1..2] == [2, 3]); | | assert(b[0] == 'a'); | | assert(b[1..2] == 'bc'); | | assert(c['one'] == 1);
+-------- | ------ | --------AND | &amp;&amp; | assert(true &amp;&amp; true);OR | &#124;&#124; | assert(true &#124;&#124; false);Not | ! | assert(!false);Less than | < | assert(1 < 2);Greater than | > | assert(4 > 3);Equal to | == | assert(5 == 5);Addition | + | assert(1 + 7 == 8); | | assert([1] + 2 == [1,2]);Subtraction | - | assert(10 – 1 == 9); | | assert([1,2,3] – 3 == [1,2]);Multiplication | * | assert(50 * 2 == 100);Division | / | assert(4 / 2 == 2);Modulus | % | assert(99 % 3 == 0);Exponent | ^ | assert(2 ^ 3 == 8);Ternary | ? | x > y ? assert(x > y) : assert(y >= x);Index | [ &nbsp; ] | For these variables:  | | a = [1, 2, 3, 4, 5]; | | b = "abcdefg"; | | c = { 'one' : 1, 'two' : 2 }; | | These are the examples: | | assert(a[0] == 1); | | assert(a[1..2] == [2, 3]); | | assert(b[0] == 'a'); | | assert(b[1..2] == 'bc'); | | assert(c['one'] == 1);
 ## Special Operators
 
-Two special operators called push and pull are used for writing data to and reading data from an external source, respectively. Their symbols are --> for push and <-- for pull. All data is pushed to or pulled from a file object or a queue object, as defined in Table 1. The data itself can be a string type, a list type, or a map type. However, it is important to ensure that the script pull the same type of data that was originally pushed into a file. Because the queue object works only with messages taken from or added to the Rapture queue, only one format is allowed for the data. The following code shows a simple example that uses the push and pull operators. It uses a repository named test.config to store map data. The first script defines the structure and pushes it as follows: ```javaconfig = {};// Write the map dataconfig['Option1'] = true;config['level'] = 42;// Create a documentdisplayName = 'test.config/main';// Write the map to the documentconfig --> displayName;```
-Next, a different script pulls in the map data and uses it to control the script's behavior: ```javaappConfig <-- displayName;if (appConfig['Option1']) do  println("level is " + appConfig['level']); else do  println("Option1 is not set.");end```
-Note that println, which is a built-in function in Reflex, handles simple formatted printing, as in this example. If all is well, the output from the second snippet of code would be: level is 42.If a file is in a repository that supports metadata, two other operators are available for manipulating the metadata. These are metapush and metapull, denoted by -->> and <<--.The following code snippet simply prints the metadata from a specific file. ```javaMeta <<-- 'c_smrs/official/physical/bond/861594AB5';println ("Meta is " + Meta);```
-The resulting output would resemble the following: `Meta is {version=1,writeTime=1351614168682,user=alan,comment=FeatureInstaller,deleted=false}'Finally, Reflex supports a download/write-back operator, denoted by <-->, which transfers data from a URI to a Reflex value, so that a simple operation on the Reflex value can take place and the updated data can be written back to the URI. An example of the syntax for this operator would be as follows: ```java'uri' <--> v {  v['hello']=1;};
+Two special operators called *push* and *pull* are used for writing data to and reading data from an external source, respectively. Their symbols are `-->` for push and `<--` for pull. All data is pushed to or pulled from a file object or a queue object, as defined in Table 1. The data itself can be a string type, a list type, or a map type. However, it is important to ensure that the script pull the same type of data that was originally pushed into a file. Because the queue object works only with messages taken from or added to the Rapture queue, only one format is allowed for the data. The following code shows a simple example that uses the push and pull operators. It uses a repository named test.config to store map data. The first script defines the structure and pushes it as follows: > Script to push 
+```javaconfig = {};// Write the map dataconfig['Option1'] = true;config['level'] = 42;// Create a documentdisplayName = 'test.config/main';// Write the map to the documentconfig --> displayName;```
+Next, a different script pulls in the map data and uses it to control the script's behavior: < Script to pull
+```javaappConfig <-- displayName;if (appConfig['Option1']) do  println("level is " + appConfig['level']); else do  println("Option1 is not set.");end```
+Note that println, which is a built-in function in Reflex, handles simple formatted printing, as in this example. If all is well, the output from the second snippet of code would be: level is 42.If a file is in a repository that supports metadata, two other operators are available for manipulating the metadata. These are metapush and metapull, denoted by -->> and <<--.The following code snippet simply prints the metadata from a specific file. > Printing metadata
+```javaMeta <<-- 'c_smrs/official/physical/bond/861594AB5';println ("Meta is " + Meta);```
+The resulting output would resemble the following: > Output from previous example
+`Meta is {version=1,writeTime=1351614168682,user=alan,comment=FeatureInstaller,deleted=false}'Finally, Reflex supports a *download/write-back* operator, denoted by `<-->`, which transfers data from a URI to a Reflex value, so that a simple operation on the Reflex value can take place and the updated data can be written back to the URI. An example of the syntax for this operator would be as follows: > Write-back example
+```java'uri' <--> v {  v['hello']=1;};
 ```
 # Flow Control
 
 Reflex supports flow control and looping with the same keywords and syntaxes as most other languages.
 ## Conditional Flow
 
-The if statement works as expected, with or without an else block to supplement it. The syntax is: ```javaif booleanExpression do  codeBlock;end[else do  codeBlock;end]```
+The if statement works as expected, with or without an else block to supplement it. The syntax is: > Using if
+```javaif booleanExpression do  codeBlock;end[else do  codeBlock;end]```
 No semicolon is required after the end keyword. ## Loops
 
-The while loop also works as expected. Its syntax is: ```javawhile booleanExpression do  codeBlock;end```
-There are two different forms of the for loop. One of these forms loops on a sequence of numeric values and works like its counterparts in other languages. An example follows: ```javafor a = 1 to 10 do  println("The value of a is " + a);end```
+The while loop also works as expected. Its syntax is: > Using while
+```javawhile booleanExpression do  codeBlock;end```
+There are two different forms of the for loop. One of these forms loops on a sequence of numeric values and works like its counterparts in other languages. An example follows: > Using for
+```javafor a = 1 to 10 do  println("The value of a is " + a);end```
 The other form of the for loop in Reflex works on elements in a list expression. The following example illustrates the process: ```javaa = [1, 2, 3, 4];b = [];for c in a do  b = b + c * 2;endassert(b == [2, 4, 6, 8]);```
-The third type of loop in Reflex is the pfor loop, which is identical in syntax and functionality to the for loop. The only difference is that Reflex attempts to run the pfor loop in parallel, executing each statement in a pool of threads, so that multiple pfor loops can be run in parallel. This loop supports both the numeric and list expression forms, but the developer should be aware that sequencing of events between parallel blocks may not take place in a predictable order. ## Break and Continue
+The third type of loop in Reflex is the *pfor* loop, which is identical in syntax and functionality to the for loop. The only difference is that Reflex attempts to run the pfor loop in parallel, executing each statement in a pool of threads, so that multiple pfor loops can be run in parallel. This loop supports both the numeric and list expression forms, but the developer should be aware that sequencing of events between parallel blocks may not take place in a predictable order. ## Break and Continue
 
-Reflex supports the break and continue keywords as they are used in other languages when controlling loops. The following snippet of code demonstrates the use of the break keyword. ```javares = [];for  i = 0 to 10 do  res = res + i; if  i == 5 do  break; endendassert(res == [0,1,2,3,4,5]);```
-The following code demonstrates the use of the continue keyword.```javares = [];for  i = 0 to 10 do if  i < 5 do  continue; end res = res + i;endassert(res == [5,6,7,8,9,10]);```
+Reflex supports the *break* and *continue* keywords as they are used in other languages when controlling loops. The following snippet of code demonstrates the use of the break keyword. > Using break
+```javares = [];for  i = 0 to 10 do  res = res + i; if  i == 5 do  break; endendassert(res == [0,1,2,3,4,5]);```
+The following code demonstrates the use of the continue keyword.> Using continue
+```javares = [];for  i = 0 to 10 do if  i < 5 do  continue; end res = res + i;endassert(res == [5,6,7,8,9,10]);```
 # Customized Functions
 
-Reflex supports user-defined functions through the def keyword. The syntax of these functions is: ```javadef functionName(parameters)  codeBlock;end```
+Reflex supports user-defined functions through the def keyword. The syntax of these functions is: > Custom function definition
+```javadef functionName(parameters)  codeBlock;end```
 After the definition, the script can directly call `functionName(parameters)'. Note that the def syntax does not require (or allow) the user to name the parameter types or the function return type. This feature allows the developer to be free with both the parameters and the return value, if one is used. The only constraint is that the body of the function and the code using its return value must be able to tolerate any type differences. Variables declared outside the scope of the function cannot be used by the function unless they are global variables, or unless they are directly passed to the function as parameters.# Modules
 
 Modules are blocks of user-created Java code that Reflex scripts can call to augment their functionality. A module is imported into the script and given an alias, after which the functions in the module code can be called directly. Examples are shown in the Importing modules subsection. 
